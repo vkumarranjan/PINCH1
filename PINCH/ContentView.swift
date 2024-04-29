@@ -32,6 +32,7 @@ struct ContentView: View {
         NavigationView {
             
             ZStack {
+                Color.clear
                 // MARK: - PAGE IMAGE
                 Image("magazine-front-cover")
                     .resizable()
@@ -75,6 +76,54 @@ struct ContentView: View {
                     isAnimation = true
                 }
             })
+            
+            // MARk infor panel
+            .overlay(
+               InfoPanelView(scale: imageSacle, offset: imagOffset)
+                .padding(.horizontal)
+                .padding(.top, 30)
+               , alignment: .top
+            )
+            // Controlles
+            
+            .overlay(
+            
+                Group {
+                    HStack {
+                        // Scale up
+                        Button {
+                            
+                        } label : {
+                            Image(systemName: "minus.magnifyingglass")
+                                .font(.system(size: 36))
+                        }
+                        // Reset
+                        
+                        Button {
+                            
+                        } label : {
+                            Image(systemName: "arrow.up.left.and.down.right.magnifyingglass")
+                                .font(.system(size: 36))
+                        }
+                        
+                        // Sacle down
+                        Button {
+                            
+                        } label : {
+                            Image(systemName: "plus.magnifyingglass")
+                                .font(.system(size: 36))
+                        }
+                        
+                        
+                    } //: Controlls
+                    .padding(EdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20))
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(12)
+                    .opacity(isAnimation ? 1 : 0)
+                }
+                    .padding(.bottom, 30)
+                ,alignment: .bottom
+            )
             
         } // : NAvigation
         .navigationViewStyle(.stack)
