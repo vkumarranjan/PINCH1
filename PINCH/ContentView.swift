@@ -12,10 +12,15 @@ struct ContentView: View {
     @State var isAnimation: Bool = false
     @State var imageSacle: CGFloat = 1
     @State var imagOffset: CGSize = .zero
-
-    
+    @State var isDrowerOpen: Bool = false
+ 
+    let pages: [Page] = pageData
+    @State var pageIndex: Int = 1
     // MARK: - FUNCTION
     
+    func currentPage() -> String {
+        return pages[pageIndex - 1].imageName
+    }
     
     func resetImageScale() {
        return withAnimation(.linear(duration: 1)) {
@@ -34,7 +39,7 @@ struct ContentView: View {
             ZStack {
                 Color.clear
                 // MARK: - PAGE IMAGE
-                Image("magazine-front-cover")
+                Image(currentPage())
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(10)
@@ -170,12 +175,33 @@ struct ContentView: View {
             // MARK: - DRawer
             .overlay (
                 HStack(spacing: 12) {
-                    Image(systemName: "chevron.compact.left")
+                    Image(systemName: isDrowerOpen ? "chevron.compact.right" : "chevron.compact.left")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 40)
                         .padding(8)
                         .foregroundStyle(.secondary)
+                        .onTapGesture(perform: {
+                            withAnimation(.easeOut) {
+                                isDrowerOpen.toggle()
+                            }
+                        })
+                    
+                    
+                    ForEach(pages) { item in
+                        Image(item.thumbnailName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 80)
+                            .cornerRadius(8)
+                            .shadow(radius: 4)
+                            .opacity(isDrowerOpen ? 1 : 0)
+                            .animation(.easeOut(duration: 0.5), value: isDrowerOpen)
+                            .onTapGesture(perform: {
+                                isAnimation = true
+                                pageIndex = item.id
+                            })
+                    }
                     
                     Spacer()
                     
@@ -186,6 +212,7 @@ struct ContentView: View {
             .cornerRadius(12)
             .opacity(isAnimation ? 1 : 0)
             .frame(width: 260)
+            .offset(x: isDrowerOpen ? 20 : 215)
             .padding(.top, UIScreen.main.bounds.height / 12 )
                 , alignment: .topTrailing
             )
