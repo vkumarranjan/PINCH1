@@ -92,7 +92,15 @@ struct ContentView: View {
                     HStack {
                         // Scale up
                         Button {
-                            
+                            withAnimation(.spring()) {
+                                if imageSacle > 1 {
+                                    imageSacle -= 1
+                                    
+                                    if imageSacle <= 1 {
+                                        resetImageScale()
+                                    }
+                                }
+                            }
                         } label : {
                             Image(systemName: "minus.magnifyingglass")
                                 .font(.system(size: 36))
@@ -100,6 +108,7 @@ struct ContentView: View {
                         // Reset
                         
                         Button {
+                            resetImageScale()
                             
                         } label : {
                             Image(systemName: "arrow.up.left.and.down.right.magnifyingglass")
@@ -108,6 +117,16 @@ struct ContentView: View {
                         
                         // Sacle down
                         Button {
+                            
+                            withAnimation(.spring()) {
+                                if imageSacle < 5 {
+                                    imageSacle += 1
+                                    
+                                    if imageSacle > 5 {
+                                        imageSacle = 5
+                                    }
+                                }
+                            }
                             
                         } label : {
                             Image(systemName: "plus.magnifyingglass")
