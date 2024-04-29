@@ -167,6 +167,29 @@ struct ContentView: View {
                 ,alignment: .bottom
             )
             
+            // MARK: - DRawer
+            .overlay (
+                HStack(spacing: 12) {
+                    Image(systemName: "chevron.compact.left")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 40)
+                        .padding(8)
+                        .foregroundStyle(.secondary)
+                    
+                    Spacer()
+                    
+                    
+                }
+            .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
+            .background(.ultraThinMaterial)
+            .cornerRadius(12)
+            .opacity(isAnimation ? 1 : 0)
+            .frame(width: 260)
+            .padding(.top, UIScreen.main.bounds.height / 12 )
+                , alignment: .topTrailing
+            )
+            
         } // : NAvigation
         .navigationViewStyle(.stack)
     }
